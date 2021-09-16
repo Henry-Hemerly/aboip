@@ -1,25 +1,32 @@
-import logo from './logo.svg';
+import { gsap } from 'gsap';
+import { useEffect, useRef } from 'react';
 import './App.css';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const test0Ref = useRef();
+    const testRef = useRef();
+
+    useEffect(() => {
+        gsap.to(test0Ref.current, { rotation: '+=360' });
+    });
+    const testChildren = gsap.utils.selector(testRef);
+    useEffect(() => {
+        gsap.to(testChildren('.test'), { x: 200 });
+    });
+    return (
+        <div className='App'>
+            <div className='test0' ref={test0Ref}>
+                Single DOM element
+            </div>
+            <br />
+            <div className='test' ref={testRef}>
+                Papa DOM
+                <div className='test'>
+                    Baby 1<div className='test'>Baby 2</div>
+                </div>
+            </div>
+        </div>
+    );
 }
 
 export default App;
